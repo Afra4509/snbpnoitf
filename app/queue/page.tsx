@@ -18,7 +18,7 @@ export default function QueueStatusPage() {
 
     const fetchStatus = async () => {
       try {
-        const res = await fetch(`/api/status?userId=${userId}`);
+        const res = await fetch(`/api/status?userId=${userId}&t=${Date.now()}`, { cache: "no-store" });
         const json = await res.json();
         
         if (!res.ok) throw new Error(json.error);
@@ -119,7 +119,7 @@ export default function QueueStatusPage() {
                 </div>
               </>
             ) : (
-              <p className="text-gray-500 w-full text-center py-2 text-sm italic">No active user currently</p>
+              <p className="text-gray-500 w-full text-center py-2 text-sm italic">Waiting for Streamer...</p>
             )}
           </div>
         </div>
