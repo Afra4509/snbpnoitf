@@ -1,0 +1,49 @@
+
+> obsfe@0.1.0 lint
+> eslint
+
+
+C:\Users\FeraGaming\Downloads\obsfe\app\afrapunya\page.tsx
+    9:38  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   22:16  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+  148:39  warning  'i' is defined but never used             @typescript-eslint/no-unused-vars
+
+C:\Users\FeraGaming\Downloads\obsfe\app\api\admin\action\route.ts
+  95:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\api\admin\users\route.ts
+  25:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\api\donate\route.ts
+  48:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\api\join-queue\route.ts
+  83:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\api\overlay\route.ts
+  23:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\api\status\route.ts
+  23:9   error  'responseData' is never reassigned. Use 'const' instead  prefer-const
+  23:23  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+  55:19  error  Unexpected any. Specify a different type                 @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\donate\page.tsx
+  41:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\overlay\page.tsx
+   7:48  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  15:16  warning  'err' is defined but never used           @typescript-eslint/no-unused-vars
+
+C:\Users\FeraGaming\Downloads\obsfe\app\page.tsx
+  40:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\FeraGaming\Downloads\obsfe\app\queue\page.tsx
+   9:36  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  26:21  error  Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  68:73  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  75:80  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+✖ 19 problems (16 errors, 3 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

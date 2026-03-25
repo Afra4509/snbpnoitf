@@ -1,0 +1,6 @@
+app/api/admin/action/route.ts(2,26): error TS2307: Cannot find module '@/lib/supabase' or its corresponding type declarations.
+app/api/admin/users/route.ts(2,26): error TS2307: Cannot find module '@/lib/supabase' or its corresponding type declarations.
+app/api/donate/route.ts(2,26): error TS2307: Cannot find module '@/lib/supabase' or its corresponding type declarations.
+app/api/join-queue/route.ts(2,26): error TS2307: Cannot find module '@/lib/supabase' or its corresponding type declarations.
+app/api/overlay/route.ts(2,26): error TS2307: Cannot find module '@/lib/supabase' or its corresponding type declarations.
+app/api/status/route.ts(2,26): error TS2307: Cannot find module '@/lib/supabase' or its corresponding type declarations.
