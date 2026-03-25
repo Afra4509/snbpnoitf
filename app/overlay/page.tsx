@@ -20,10 +20,10 @@ export default function OverlayPage() {
     return () => clearInterval(int);
   }, []);
 
-  if (!activeUser) return null; // Transparent in OBS when no user
+  if (!activeUser) return <main className="w-screen h-screen bg-[#00FF00] overflow-hidden font-sans"></main>; // Keep green screen active
 
   return (
-    <main className="w-screen h-screen bg-transparent overflow-hidden font-sans">
+    <main className="w-screen h-screen bg-[#00FF00] overflow-hidden font-sans">
       <div className="absolute top-12 left-1/2 -translate-x-1/2 flex justify-center w-full max-w-2xl px-8 animate-in fade-in zoom-in-95 slide-in-from-top-4 duration-700 ease-out">
         
         {/* Dynamic Island Style Container - Lightweight for OBS */}
