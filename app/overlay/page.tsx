@@ -12,7 +12,7 @@ export default function OverlayPage() {
         const res = await fetch(`/api/overlay?t=${Date.now()}`, { cache: "no-store" });
         const data = await res.json();
         setActiveUser(data.activeUser || null);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     fetchOverlay();
@@ -25,10 +25,10 @@ export default function OverlayPage() {
   return (
     <main className="w-screen h-screen bg-[#00FF00] overflow-hidden font-sans">
       <div className="absolute top-12 left-1/2 -translate-x-1/2 flex justify-center w-full max-w-2xl px-8 animate-in fade-in zoom-in-95 slide-in-from-top-4 duration-700 ease-out">
-        
+
         {/* Dynamic Island Style Container - Lightweight for OBS */}
         <div className="relative rounded-full bg-[#0a0a0a] border border-white/10 shadow-2xl flex items-center p-2.5 gap-5 overflow-hidden pr-10 min-w-[320px]">
-          
+
           {/* Subtle static gradient background instead of heavy blur */}
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 via-purple-900/40 to-emerald-900/40 opacity-50 pointer-events-none"></div>
 
@@ -38,7 +38,7 @@ export default function OverlayPage() {
             {/* Pulsing ring around avatar - lightweight CSS scale/fade */}
             <div className="absolute inset-[-4px] rounded-full border border-white/20 animate-pulse pointer-events-none opacity-50"></div>
           </div>
-          
+
           {/* Details Section */}
           <div className="flex flex-col z-10 justify-center">
             <div className="flex items-center gap-2.5 mb-0.5">
@@ -52,12 +52,12 @@ export default function OverlayPage() {
                 </span>
               )}
             </div>
-            
+
             <h1 className="text-xl font-semibold text-white tracking-tight leading-tight">
               {activeUser.registration_number}
             </h1>
           </div>
-          
+
         </div>
       </div>
     </main>
