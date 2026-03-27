@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Zap, ArrowRight, Coins } from "lucide-react";
+import { Loader2, Zap, Coins, ChevronRight, TrendingUp, Clock } from "lucide-react";
 
 export default function DonatePage() {
   const router = useRouter();
@@ -10,8 +10,13 @@ export default function DonatePage() {
   const [loading, setLoading] = useState(false);
   const [customAmount, setCustomAmount] = useState("");
   const [error, setError] = useState("");
+  const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
 
-  const presetAmounts = [5000, 10000, 20000];
+  const presetAmounts = [
+    { amount: 5000, label: "Rp 5k", boost: "+3 steps" },
+    { amount: 10000, label: "Rp 10k", boost: "+7 steps" },
+    { amount: 20000, label: "Rp 20k", boost: "+15 steps" },
+  ];
 
   useEffect(() => {
     const id = localStorage.getItem("queue_user_id");
@@ -31,10 +36,7 @@ export default function DonatePage() {
       const slug = process.env.NEXT_PUBLIC_PAKASIR_SLUG || "notifu";
       const origin = window.location.origin;
       const redirectUrl = `${origin}/api/donate/confirm?user_id=${userId}&amount=${amount}`;
-      
       const pakasirUrl = `https://app.pakasir.com/pay/${slug}/${amount}?order_id=${userId}&qris_only=1&redirect=${encodeURIComponent(redirectUrl)}`;
-      
-      // Redirect to Pakasir
       window.location.href = pakasirUrl;
     } catch (err: any) {
       setError(err.message || "An error occurred");
@@ -50,57 +52,132 @@ export default function DonatePage() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 bg-[#020817]">
-        <div className="absolute top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-indigo-600/20 blur-[120px]" />
-        <div className="absolute -bottom-[20%] -right-[10%] w-[40%] h-[40%] rounded-full bg-emerald-600/20 blur-[120px]" />
+      {/* Background */}
+      <div className="absolute inset-0 -z-10 bg-[#020817]">
+        <div className="absolute top-[10%] -left-[10%] w-[55%] h-[55%] rounded-full bg-amber-600/10 blur-[120px] animate-pulse" style={{ animationDuration: '7s' }} />
+        <div className="absolute -bottom-[15%] -right-[5%] w-[45%] h-[45%] rounded-full bg-emerald-600/10 blur-[120px] animate-pulse" style={{ animationDuration: '9s', animationDelay: '3s' }} />
+        <div className="absolute top-[50%] left-[30%] w-[25%] h-[25%] rounded-full bg-orange-600/8 blur-[80px]" />
       </div>
 
-      <div className="w-full max-w-md glass-card p-8 animate-in zoom-in-95 duration-500">
+      <div
+        className="w-full max-w-md animate-in zoom-in-95 duration-500"
+        style={{
+          background: 'rgba(255,255,255,0.04)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255,255,255,0.09)',
+          borderRadius: '24px',
+          padding: '32px',
+          boxShadow: '0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset',
+        }}
+      >
+        {/* Header */}
         <div className="text-center mb-8">
-          <div className="mx-auto w-16 h-16 bg-yellow-500/10 rounded-2xl flex items-center justify-center mb-4 border border-yellow-500/20">
-            <Zap className="w-8 h-8 text-yellow-500" />
+          <div
+            className="mx-auto w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
+            style={{
+              background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+              boxShadow: '0 8px 24px rgba(245,158,11,0.4)',
+            }}
+          >
+            <Zap className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold mb-2">Boost Your Priority</h1>
-          <p className="text-muted-foreground text-sm">
-            Support the stream and jump ahead in the queue!
+          <h1 className="text-2xl font-bold mb-2 tracking-tight text-white">Boost Your Priority</h1>
+          <p style={{ color: 'rgba(148,163,184,0.85)', fontSize: '14px', lineHeight: 1.6 }}>
+            Donasi untuk mendukung stream dan{" "}
+            <span style={{ color: '#fbbf24', fontWeight: 600 }}>loncat lebih cepat</span>{" "}
+            ke posisi atas antrian!
+          </p>
+        </div>
+
+        {/* How it works banner */}
+        <div
+          className="mb-6 p-3.5 rounded-xl flex items-center gap-3"
+          style={{
+            background: 'rgba(245,158,11,0.08)',
+            border: '1px solid rgba(245,158,11,0.2)',
+          }}
+        >
+          <TrendingUp className="w-5 h-5 flex-shrink-0" style={{ color: '#f59e0b' }} />
+          <p className="text-xs leading-relaxed" style={{ color: 'rgba(251,191,36,0.9)' }}>
+            <span className="font-semibold">Cara kerja boost:</span> Semakin besar donasi, semakin
+            tinggi posisi antrian kamu. Langsung naik tanpa perlu menunggu lama!
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 rounded-lg bg-red-500/10 text-red-400 text-sm text-center border border-red-500/20">
+          <div
+            className="mb-5 p-4 rounded-xl text-sm text-center"
+            style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#f87171' }}
+          >
             {error}
           </div>
         )}
 
         <div className="space-y-4">
+          {/* Preset amounts */}
           <div className="grid grid-cols-3 gap-3">
-            {presetAmounts.map((amt) => (
+            {presetAmounts.map(({ amount, label, boost }) => (
               <button
-                key={amt}
-                onClick={() => handleDonate(amt)}
+                key={amount}
+                onClick={() => { setSelectedPreset(amount); handleDonate(amount); }}
                 disabled={loading}
-                className="bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-4 flex flex-col items-center justify-center transition-all disabled:opacity-50"
+                className="rounded-xl py-4 flex flex-col items-center justify-center transition-all disabled:opacity-50 relative overflow-hidden group"
+                style={{
+                  background: selectedPreset === amount
+                    ? 'rgba(245,158,11,0.15)'
+                    : 'rgba(255,255,255,0.04)',
+                  border: selectedPreset === amount
+                    ? '1px solid rgba(245,158,11,0.5)'
+                    : '1px solid rgba(255,255,255,0.08)',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'rgba(245,158,11,0.12)';
+                  (e.currentTarget as HTMLButtonElement).style.border = '1px solid rgba(245,158,11,0.35)';
+                  (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)';
+                  (e.currentTarget as HTMLButtonElement).style.border = '1px solid rgba(255,255,255,0.08)';
+                  (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+                }}
               >
-                <Coins className="w-5 h-5 mb-2 text-yellow-400" />
-                <span className="font-semibold text-sm">Rp {amt / 1000}k</span>
+                <Coins className="w-5 h-5 mb-2" style={{ color: '#fbbf24' }} />
+                <span className="font-bold text-sm text-white">{label}</span>
+                <span
+                  className="text-xs mt-1 font-semibold"
+                  style={{ color: '#34d399' }}
+                >
+                  {boost}
+                </span>
               </button>
             ))}
           </div>
 
-          <div className="relative flex items-center py-2">
-            <div className="flex-grow border-t border-white/10"></div>
-            <span className="flex-shrink-0 mx-4 text-gray-400 text-xs uppercase tracking-wider">or custom amount</span>
-            <div className="flex-grow border-t border-white/10"></div>
+          {/* Divider */}
+          <div className="relative flex items-center py-1">
+            <div className="flex-grow" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
+            <span className="flex-shrink-0 mx-4 text-xs uppercase tracking-widest" style={{ color: 'rgba(100,116,139,0.7)' }}>
+              atau nominal lain
+            </span>
+            <div className="flex-grow" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
           </div>
 
+          {/* Custom amount */}
           <div className="flex gap-3">
             <div className="relative flex-1">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium">Rp</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 font-medium" style={{ color: 'rgba(100,116,139,0.8)' }}>Rp</span>
               <input
                 type="number"
                 min="1000"
                 placeholder="0"
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-all text-white"
+                className="w-full pl-10 pr-4 py-3 rounded-xl focus:outline-none transition-all text-white"
+                style={{
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}
+                onFocus={e => (e.currentTarget.style.boxShadow = '0 0 0 2px rgba(245,158,11,0.4)')}
+                onBlur={e => (e.currentTarget.style.boxShadow = 'none')}
                 value={customAmount}
                 onChange={(e) => setCustomAmount(e.target.value)}
               />
@@ -108,19 +185,46 @@ export default function DonatePage() {
             <button
               onClick={() => handleDonate(Number(customAmount))}
               disabled={loading || !customAmount || Number(customAmount) < 1000}
-              className="bg-yellow-500 text-yellow-950 px-6 font-semibold rounded-xl hover:bg-yellow-400 transition-colors disabled:opacity-50 flex items-center"
+              className="px-6 font-bold rounded-xl transition-all disabled:opacity-40 flex items-center gap-1"
+              style={{
+                background: 'linear-gradient(135deg, #f59e0b, #f97316)',
+                color: '#fff',
+                boxShadow: '0 6px 16px rgba(245,158,11,0.35)',
+              }}
+              onMouseEnter={e => { if (!(e.currentTarget as HTMLButtonElement).disabled) (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.04)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Boost"}
             </button>
           </div>
 
-          <button
-            onClick={skipDonation}
-            className="w-full mt-6 py-4 flex items-center justify-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-medium group"
-          >
-            Skip, I will wait in the standard queue
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          {/* Skip button - prominent */}
+          <div className="pt-2">
+            <button
+              onClick={skipDonation}
+              className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 font-medium text-sm transition-all group"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                color: 'rgba(148,163,184,0.8)',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.08)';
+                (e.currentTarget as HTMLButtonElement).style.color = '#fff';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)';
+                (e.currentTarget as HTMLButtonElement).style.color = 'rgba(148,163,184,0.8)';
+              }}
+            >
+              <Clock className="w-4 h-4 flex-shrink-0" />
+              <span>Skip, I will wait in the standard queue</span>
+              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </button>
+            <p className="text-center text-xs mt-2" style={{ color: 'rgba(100,116,139,0.65)' }}>
+              Kamu tetap masuk antrian standar — tanpa prioritas tambahan
+            </p>
+          </div>
         </div>
       </div>
     </main>

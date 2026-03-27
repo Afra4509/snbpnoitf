@@ -4,11 +4,11 @@ import { supabase } from '@/lib/supabase';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { registration_number, birth_date, is_private } = body;
+    const { registration_number, birth_date, is_private, sender_name } = body;
     
     // Simple validation
-    if (!registration_number || !birth_date) {
-      return NextResponse.json({ error: 'Registration number and birth date are required' }, { status: 400 });
+    if (!registration_number || !birth_date || !sender_name) {
+      return NextResponse.json({ error: 'Registration number, sender name and birth date are required' }, { status: 400 });
     }
 
     // Capture IP
@@ -62,6 +62,7 @@ export async function POST(req: Request) {
       .insert([
         {
           registration_number,
+          sender_name,
           birth_date,
           is_private: is_private || false,
           donation_amount: 0,

@@ -10,7 +10,7 @@ export async function GET() {
     // Wait, the prompt says "Private users must NOT appear in public overlay."
     const { data: activeUsers, error } = await supabase
       .from('queue_users')
-      .select('registration_number, birth_date, donation_amount, is_private')
+      .select('registration_number, sender_name, birth_date, donation_amount, is_private')
       .eq('status', 'active')
       .eq('is_private', false)
       .limit(1);
